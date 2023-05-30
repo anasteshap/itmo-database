@@ -10,3 +10,4 @@ select CustomerID, avg(ProductCount) as Avg
 from OrderCount
 group by CustomerID
 order by CustomerID
+
