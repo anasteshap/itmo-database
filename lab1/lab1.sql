@@ -20,12 +20,14 @@ where p.StandardCost > 100
 /* task3 */
 select p.Name, p.Color, p.Size
 from Production.Product as p
-where p.StandardCost < 100 and p.Color = 'Black'
+where p.StandardCost < 100
+  and p.Color = 'Black'
 
 /* task4 */
 select p.Name, p.Color, p.Size
 from Production.Product as p
-where p.StandardCost < 100 and p.Color = 'Black'
+where p.StandardCost < 100
+  and p.Color = 'Black'
 order by p.StandardCost
 
 /* task5 */
@@ -37,7 +39,8 @@ order by p.StandardCost desc
 /* task6 */
 select top 3 p.Name, p.Color
 from Production.Product as p
-where p.Color is not NULL and p.Size is not NULL
+where p.Color is not NULL
+  and p.Size is not NULL
 
 /* task7 */
 select distinct p.Color
@@ -57,7 +60,8 @@ where p.Name like '[DM]___%'
 /* task9_2 */
 select p.Name
 from Production.Product as p
-where p.Name like '[DM]%' and len(p.Name) > 3
+where p.Name like '[DM]%'
+  and len(p.Name) > 3
 
 /* task10_1 */
 select p.Name

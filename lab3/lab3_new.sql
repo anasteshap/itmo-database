@@ -2,10 +2,11 @@
 select p.Name, pc.Name
 from Production.Product as p
          join Production.ProductSubcategory as psc
-             on p.ProductSubcategoryID = psc.ProductCategoryID
+              on p.ProductSubcategoryID = psc.ProductCategoryID
          join Production.ProductCategory as pc
-             on psc.ProductCategoryID = pc.ProductCategoryID
-where p.Color = 'Red' and p.StandardCost >= 100
+              on psc.ProductCategoryID = pc.ProductCategoryID
+where p.Color = 'Red'
+  and p.StandardCost >= 100
 
 /* task2_1 */
 select psc1.Name
@@ -21,8 +22,10 @@ having count(*) > 1
 
 /* task2_3 */
 select psc1.Name
-from Production.ProductSubcategory as psc1, Production.ProductSubcategory as psc2
-where psc1.ProductSubcategoryID != psc2.ProductSubcategoryID and psc1.Name = psc2.Name
+from Production.ProductSubcategory as psc1,
+     Production.ProductSubcategory as psc2
+where psc1.ProductSubcategoryID != psc2.ProductSubcategoryID
+  and psc1.Name = psc2.Name
 
 /* task3_1 */
 select pc.Name as Category, count(*) as CountOfProducts
@@ -59,8 +62,8 @@ group by CreditRating
 /* task5 */ /* непонятно - с наименьшим или наибольшим кол-вом товаро */
 select top 3 psc.Name, count(*)
 from Production.Product as p
-         join  Production.ProductSubcategory as psc
-               on psc.ProductSubcategoryID = p.ProductSubcategoryID
+         join Production.ProductSubcategory as psc
+              on psc.ProductSubcategoryID = p.ProductSubcategoryID
 group by psc.Name
 order by count(*)
 
@@ -158,17 +161,19 @@ group by v.CreditRating
 order by v.CreditRating
 
 SELECT TOP 3 PC.ProductCategoryID
-FROM [Production].[Product] AS P INNER JOIN
+FROM [Production].[Product] AS P
+         INNER JOIN
      [Production].[ProductSubcategory] AS PSC
-     ON P.ProductSubcategoryID=PSC.ProductSubcategoryID
-                                 INNER JOIN [Production].[ProductCategory] AS PC
-                                            ON PSC.ProductCategoryID=PC.ProductCategoryID
+     ON P.ProductSubcategoryID = PSC.ProductSubcategoryID
+         INNER JOIN [Production].[ProductCategory] AS PC
+                    ON PSC.ProductCategoryID = PC.ProductCategoryID
 GROUP BY PC.ProductCategoryID
 ORDER BY COUNT(*) DESC
 SELECT top 3 psc.name, count(*)
-FROM [Production].[Product] AS p INner JOIN
+FROM [Production].[Product] AS p
+         INner JOIN
      [Production].[ProductSubcategory] AS psc
-     ON p.ProductSubcategoryID=psc.ProductSubcategoryID
+     ON p.ProductSubcategoryID = psc.ProductSubcategoryID
 WHERE p.ProductSubcategoryID is NOT null
 GROUP BY p.ProductSubcategoryID, psc.Name
 ORDER BY count(*) desc
@@ -177,3 +182,18 @@ ORDER BY count(*) desc
 
 
 
+select distinct soh.CustomerID
+from Sales.SalesOrderHeader as soh
+where soh.CustomerID not in(
+    select CustomerID
+    from Sales.SalesOrderHeader as soh2
+    where exists(
+                  select ProductID
+                  from Sales.SalesOrderDetail as sod1
+                           join Sales.SalesOrderHeader as soh1
+                                on sod1.SalesOrderID = soh1.SalesOrderID
+                  where soh1.CustomerID = soh2.CustomerID
+                  group by ProductID
+                  having count(*) >= 2
+              )
+)

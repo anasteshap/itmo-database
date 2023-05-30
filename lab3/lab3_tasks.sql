@@ -31,7 +31,7 @@ group by p.Name
 select p.Name
 from Production.Product as p
          left join Sales.SalesOrderDetail as sod
-              on p.ProductID = sod.ProductID
+                   on p.ProductID = sod.ProductID
 where sod.ProductID is null
 group by p.Name
 

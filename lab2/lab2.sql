@@ -1,7 +1,8 @@
 /* task1 */
 select p.Color, count(*) as Amount
 from Production.Product as p
-where p.Color is not null and p.StandardCost >= 30
+where p.Color is not null
+  and p.StandardCost >= 30
 group by p.Color
 
 /* task2 */
@@ -107,7 +108,8 @@ ORDER BY UnitPrice DESC
 /* task14 */
 select p.ProductSubcategoryID, count(*) as AmountOfProducts
 from Production.Product as p
-where p.ProductSubcategoryID is not null and p.Color is not null
+where p.ProductSubcategoryID is not null
+  and p.Color is not null
 group by p.ProductSubcategoryID
 
 /* task15 */
@@ -125,20 +127,10 @@ group by sod.ProductID
 having count(*) > 2
 
 
-
-
-
-
-
-
-
-
-
-
 select p.FirstName, p.LastName
 from Person.Person as p
-where p.Suffix is not null and p.Suffix != 'Jr.'
-
+where p.Suffix is not null
+  and p.Suffix != 'Jr.'
 
 
 select sod.ProductID
